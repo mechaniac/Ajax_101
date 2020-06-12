@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax 1 - Text File</title>
+</head>
+<body>
+    <button id="button">Get Textfile</button>
+    <p>my loaded text:</p>
+    <div id="textBox">
+
+    </div>
+
+    <script>
+        //Create Event Listener
+        document.getElementById('button').addEventListener('click', loadText)
+
+        function loadText(){
+            console.log('clicked')
+            //Create XHR Object
+            var xhr = new XMLHttpRequest()
+            //----------------------------
+
+            // OPEN(type, url/file, isAsynchronous)
+            xhr.open('GET', 'sampsle.txt', true)
+            //---------------------------------
+
+            xhr.onprogress = function(){    //use for LOADING screen animations
+                console.log(`onprogress: ${this.readyState}`)
+            }
+
+
+            xhr.onreadystatechange = function () {
+                if(this.readyState == 4 && this.status == 200){     //must check for state as well!
+                    console.log(this.responseText)
+                }
+            }
+
+            xhr.onload = function(){
+                console.log(this.status)
+                if(this.status == 200){
+                    console.log(this.responseText)
+                    console.log('success')
+                    document.getElementById('textBox').innerHTML = this.responseText
+                } else if(this.status == 404){
+                    document.getElementById('textBox').innerHTML = 'Error!'
+                }
+            }
+
+            xhr.onerror= function(){
+                console.log('request ERROR')
+            }
+            // SEND XMLHttpReq to server, if async => returns immediately => res comes per event when readystate == 4
+            xhr.send()
+            //--------
+        }
+    </script>
+</body>
+</html>
