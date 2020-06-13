@@ -1,4 +1,4 @@
-# Ajax_101
+# Ajax_101 & FETCH api
 XMLHttpRequest basic usage
 
 following Brad Traversy
